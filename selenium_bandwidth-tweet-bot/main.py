@@ -24,13 +24,27 @@ driver = webdriver.Chrome(service=ChromeService(
     ChromeDriverManager().install()), options=chrome_options)
 
 
-url = ("https://www.linkedin.com/jobs/search/?currentJobId=3586148395&f_LF=f_AL&geoId=101356765&"
-       "keywords=python&location=London%2C%20England%2C%20United%20Kingdom&refresh=true")
+url_speedtest = "https://speedtest.cnlab.ch/en/"
 
-driver.get(url=url)
+driver.get(url=url_speedtest)
 
+# Start measuring
+start_button = driver.find_element(
+    By.CSS_SELECTOR, "app-speedtest-start-button > div > div")
+start_button.click()
+
+# Wait for the run to finish, then get the results
+time.sleep(30)
+avg_download_el = driver.find_element(
+    By.CSS_SELECTOR, "app-speedtest-status > div:nth-child(1) > table > tbody > tr:nth-child(2) > td:nth-child(2)")
+avg_upload_el = driver.find_element(
+    By.CSS_SELECTOR, "app-speedtest-status > div:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)")
+avg_download = float(avg_download_el.text)
+avg_upload = float(avg_upload_el.text)
+
+print(f"Avg. DL: {avg_download} / Avg. UP: {avg_upload}")
 # Click Reject Cookies Button
-time.sleep(2)
+""" time.sleep(2)
 reject_button = driver.find_element(
     by=By.CSS_SELECTOR, value='button[action-type="DENY"]')
 reject_button.click()
@@ -45,7 +59,7 @@ passwordField = driver.find_element(By.ID, "password")
 
 usernameField.send_keys(LOGIN)
 passwordField.send_keys(PASSWORD)
-passwordField.send_keys(Keys.ENTER)
+passwordField.send_keys(Keys.ENTER) """
 # driver.implicitly_wait(10)
 
 """ first_name_input.send_keys("John")
