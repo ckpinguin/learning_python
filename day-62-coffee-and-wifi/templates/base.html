@@ -4,14 +4,10 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    {% block styles %}
-    <!-- Load Bootstrap-Flask CSS here -->
-
-    <!-- Link to the styles.css here to apply styling to all the child templates.-->
-
+    {% block styles %} {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="static/styles.css" />
     {% endblock %}
     <title>{% block title %}{% endblock %}</title>
   </head>
