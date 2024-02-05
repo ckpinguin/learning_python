@@ -1,20 +1,32 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-
-URL_SPOTIFY = ""
-
-SPOTIFY_CLIENT_ID = config_data["SPOTIFY_CLIENT_ID"]
-SPOTIFY_CLIENT_SECRET = config_data["SPOTIFY_CLIENT_SECRET"]
+import json
 
 
-# Spotify part
-auth_base = spotipy.oauth2.SpotifyOAuth(
-    client_id=SPOTIFY_CLIENT_ID, client_secret=SPOTIFY_CLIENT_SECRET,
-    redirect_uri="http://example.com", scope="playlist-modify-private")
-auth_base.get_access_token()
-spotify = spotipy.Spotify(
-    client_credentials_manager=SpotifyClientCredentials
-    (client_id=SPOTIFY_CLIENT_ID, client_secret=SPOTIFY_CLIENT_SECRET))
+class Spotifier():
+    try:
+        with open(".secret.json", "r") as config_file:
+            config_data = json.load(config_file)
+    except FileNotFoundError:
+        print("ERROR: No config file found!")
+        exit(0)
+
+    SPOTIFY_CLIENT_ID = config_data["SPOTIFY_CLIENT_ID"]
+    SPOTIFY_CLIENT_SECRET = config_data["SPOTIFY_CLIENT_SECRET"]
+
+    def __init__(self):
+        self.__authentify()
+
+    def __authentify(self):
+        auth_base = spotipy.oauth2.SpotifyOAuth(
+            client_id=self.SPOTIFY_CLIENT_ID,
+            client_secret=self.SPOTIFY_CLIENT_SECRET,
+            redirect_uri="http://example.com", scope="playlist-modify-private")
+        auth_base.get_access_token()
+        self.spotify = spotipy.Spotify(
+            client_credentials_manager=SpotifyClientCredentials
+            (client_id=self.SPOTIFY_CLIENT_ID,
+             client_secret=self.SPOTIFY_CLIENT_SECRET))
 
 
 year = date.year

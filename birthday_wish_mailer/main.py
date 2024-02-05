@@ -15,6 +15,9 @@ except FileNotFoundError:
     print("ERROR: No config file found!")
     exit(0)
 
+
+SPOTIFY_CLIENT_ID = config_data["SPOTIFY_CLIENT_ID"]
+SPOTIFY_CLIENT_SECRET = config_data["SPOTIFY_CLIENT_SECRET"]
 SENDER = config_data.get("SENDER")
 LOGIN = config_data.get("LOGIN")
 MY_PASS = config_data.get("PASSWORD")
