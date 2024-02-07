@@ -6,7 +6,7 @@ block content %}
   {% for movie in movies %}
   <div class="card">
     <div class="front" style="background-image: url({{movie.img_url}});">
-      <p class="large">1</p>
+      <p class="large">{{ movie.ranking }}</p>
     </div>
     <div class="back">
       <div>
@@ -21,8 +21,10 @@ block content %}
         <p class="review">"{{ movie.review }}"</p>
         <p class="overview">{{ movie.overview }}</p>
 
-        <a href="{{ url_for('edit') }}" class="button">Update</a>
-        <a href="{{ url_for('delete') }}" class="button delete-button">
+        <a href="{{ url_for('edit', id=movie.id) }}" class="button">Update</a>
+        <a
+          href="{{ url_for('delete', id=movie.id) }}"
+          class="button delete-button">
           Delete
         </a>
       </div>
