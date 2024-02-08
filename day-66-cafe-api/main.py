@@ -60,7 +60,7 @@ def get_random_cafe():
     # More modern & concise is this:
     # all_cafes = Cafe.query.all()
     # More efficient to make the choice in db already:
-    random_cafe = Cafe.query.order_by(func.random()).first()
+    random_cafe: Cafe = Cafe.query.order_by(func.random()).first()
     return jsonify(random_cafe.to_dict())
 
 
@@ -76,13 +76,40 @@ def get_all_cafes():
 def search_cafe():
     name = request.args.get('name')
     location = request.args.get('loc')
-    matched_cafes = Cafe.query.filter(Cafe.name.like(
+    matched_cafes: list[Cafe] = Cafe.query.filter(Cafe.name.like(
         f"%{name}%"), Cafe.location.like(f"%{location}%")).all()
     print(matched_cafes)
     print(Cafe.query.filter(Cafe.name.like(
         f"%{name}%"), Cafe.location.like(f"%{location}%")).statement)
     list_of_cafes = [cafe.to_dict() for cafe in matched_cafes]
     return jsonify(list_of_cafes)
+
+
+@app.route("/new", methods=["post"])
+def add_cafe():
+    cafe_data = request.json
+    new_cafe = Cafe(**cafe_data)
+    db.session.add(new_cafe)
+    db.session.commit()
+    return jsonify({'response': {'success': "New entry added successfully."}})
+
+
+@app.route("/update-price/<id>", methods=["patch"])
+def update_price(id):
+    cafe: Cafe = Cafe.query.get_or_404(id)
+    payload = request.json
+    new_price = payload['coffee_price']
+    cafe.coffee_price = new_price
+    db.session.commit()
+    return jsonify(cafe.to_dict())
+
+
+@app.route("/delete/<id>", methods=["delete"])
+def delete_cafe(id):
+    cafe: Cafe = Cafe.query.get_or_404(id)
+    cafe.query.delete()
+    db.session.commit()
+    return jsonify({'response': {'success': "Entry deleted."}})
 
 
 if __name__ == '__main__':
