@@ -1,4 +1,3 @@
-import datetime as dt
 from bs4 import BeautifulSoup
 import requests
 
@@ -7,13 +6,12 @@ class BillboardTimeMachine:
     # Should be stable enough to be a constant:
     URL_BILLBOARD = "https://www.billboard.com/charts/hot-100/"
 
-    def __init__(self, date: str):
+    def __init__(self, date: str) -> None:
         self.date_str = date
-        self.date = dt.datetime.strptime(date, "%Y-%m-%d")
 
     def __getBillboard(self) -> str:
         url = f"{self.URL_BILLBOARD}{self.date_str}"
-        # print(f"getting data on {url}")
+        print(f"getting data on {url}")
         response = requests.get(url)
         if response.status_code != 200:
             raise f"Failed to retrieve the page {url}. Status Code:\
