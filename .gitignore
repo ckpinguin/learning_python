@@ -10,3 +10,4 @@ TEST_birthdays.csv
 .credentials.json
 .env
 .cache
+dist/
