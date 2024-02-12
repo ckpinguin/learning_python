@@ -57,12 +57,13 @@ def secrets():
 
 @app.route('/logout')
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for('home'))
 
 
 @app.route('/download')
 def download():
-    pass
+    return send_from_directory('static', filename="files/cheat_sheet.pdf")
 
 
 if __name__ == "__main__":
