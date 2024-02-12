@@ -6,6 +6,7 @@ import random
 import datetime as dt
 import socks
 from billboard_timemachine import BillboardTimeMachine
+from spotifier import Spotifier
 
 
 try:
@@ -39,8 +40,12 @@ def load_birthday_data(file) -> pandas.DataFrame:
     return pandas.read_csv(file)
 
 
-def filter_active(df) -> pandas.DataFrame:
+def filter_active(df: pandas.DataFrame) -> pandas.DataFrame:
     return df[df['active'] == 1]
+
+
+def filter_has_email(df: pandas.DataFrame) -> pandas.DataFrame:
+    return df.dropna(subset=['email'])
 
 
 def filter_birthdays(df: pandas.DataFrame,
@@ -52,18 +57,20 @@ def filter_birthdays(df: pandas.DataFrame,
 def extract_filtered_entries(df: pandas.DataFrame) -> list[dict]:
     return [{'firstname': row['firstname'],
              'gender': row['gender'], 'email': row['email'],
-             'year': row['year'], 'month': row['month'],
-             'day': row['day']}
+             'year': int(row['year']), 'month': int(row['month']),
+             'day': int(row['day'])}
             for _, row in df.iterrows()]
 
 
 def find_persons_with_birthday_today(file) -> list[dict]:
-    df_active = load_birthday_data(file)
+    df_all = load_birthday_data(file)
+    df_active = filter_active(df_all)
+    df_send = filter_has_email(df_active)
     now = dt.datetime.now()
     current_month = now.month
     current_day = now.day
     df_birthday_exists = filter_birthdays(
-        df_active, current_month, current_day)
+        df_send, current_month, current_day)
     filtered_entries = extract_filtered_entries(df_birthday_exists)
     return filtered_entries
 
@@ -110,17 +117,17 @@ def send_mail(email_addr, content, bcc=None) -> None:
 
 def send_mail_for_all_bday_persons(
         persons_with_birthday: list[dict],
-        top_three_songs_for_birthday: list[tuple]) -> None:
+        top_three_songs_for_birthday: list[tuple],
+        spotify_urls: list[str]) -> None:
     for person in persons_with_birthday:
         template_content = read_random_template()
         content = replace_content(
             template_content, person['firstname'], person['gender'])
-        content_special = "\n\nP.S. Die 3 Top-Songs der US-Charts an deinem Geburtstag waren:\n\n"
+        content_special = "\n\nP.S. Die 3 Top-Songs der US-Charts an deinem Geburtsdatum waren:\n\n"
+        i = 0
         for song, artist in top_three_songs_for_birthday:
-            content_special += f"Song: {song}, Interpret: {artist}\n"
-        print(
-            f"Sending mail to{person['email']} with content:\n \
-                {content}\n{content_special}")
+            content_special += f"Song: {song}, Interpret: {artist}: {spotify_urls[i]}\n"
+            i += 1
         content += "\n" + content_special
         send_mail(person['email'], content, bcc=BCC_ADDR)
 
@@ -129,12 +136,14 @@ def send_mail_for_all_bday_persons(
 persons_with_birthday = find_persons_with_birthday_today(BIRTHDAY_FILE)
 
 for person in persons_with_birthday:
-    year = person['year']
+    year = str(person['year'])
     month = str(person['month']).zfill(2)
     day = str(person['day']).zfill(2)
-    bb = BillboardTimeMachine(
+    billboard = BillboardTimeMachine(
         f"{year}-{month}-{day}")
-    top_three_songs_for_birthday = bb.get_top_three_artists_and_tracks()
+    top_three_songs_for_birthday = billboard.get_top_three_artists_and_tracks()
+    spotify = Spotifier(*zip(*top_three_songs_for_birthday))
+    spotify_urls = spotify.get_spotify_urls()
 
 send_mail_for_all_bday_persons(
-    persons_with_birthday, top_three_songs_for_birthday)
+    persons_with_birthday, top_three_songs_for_birthday, spotify_urls=spotify_urls)
