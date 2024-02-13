@@ -2,15 +2,18 @@
 
 <div class="box">
   <h1>Flask Authentication</h1>
-  <!-- TODO: Hide the Login/Registration buttons for logged-in users -->
-  <a href="{{ url_for('login') }}" class="btn btn-primary btn-block btn-large"
-    >Login</a
-  >
+  {% if not logged_in: %}
+  <a href="{{ url_for('login') }}" class="btn btn-primary btn-block btn-large">Login</a>
+  </a>
   <a
     href="{{ url_for('register') }}"
-    class="btn btn-secondary btn-block btn-large"
-    >Register</a
-  >
+    class="btn btn-secondary btn-block btn-large">
+    Register
+  </a>
+    {% else %}
+    <p> You are logged in </p>
+    <a href="{{ url_for('secrets') }}" class="btn btn-primary btn-block btn-large">Get the secret document</a>
+  {% endif %}
 </div>
 
 {% endblock %}
