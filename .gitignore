@@ -11,3 +11,4 @@ TEST_birthdays.csv
 .env
 .cache
 dist/
+._*
