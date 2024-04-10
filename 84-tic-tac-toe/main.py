@@ -28,13 +28,20 @@ class TicTacToe:
             self.print_sep_line() if i < 2 else None
 
     def check_winner(self):
-        if self.fields[0] == self.fields[1] == self.fields[2] != ' ' or \
-                self.fields[3] == self.fields[4] == self.fields[5] != ' ' or \
-                self.fields[6] == self.fields[7] == self.fields[8] != ' ' or \
-                self.fields[0] == self.fields[3] == self.fields[6] != ' ' or \
-                self.fields[1] == self.fields[4] == self.fields[7] != ' ' or \
-                self.fields[2] == self.fields[5] == self.fields[8] != ' ' or \
-                self.fields[0] == self.fields[4] == self.fields[8] != ' ' or \
+        # Check rows
+        for i in [0, 3, 6]:
+            if self.fields[i] == self.fields[i+1] == self.fields[i+2] != ' ':
+                print(f'Player {self.actual_player} wins!')
+                exit(0)
+
+        # Check columns
+        for i in range(3):
+            if self.fields[i] == self.fields[i+3] == self.fields[i+6] != ' ':
+                print(f'Player {self.actual_player} wins!')
+                exit(0)
+
+        # Check the two diagonals
+        if self.fields[0] == self.fields[4] == self.fields[8] != ' ' or \
                 self.fields[2] == self.fields[4] == self.fields[6] != ' ':
             print(f'Player {self.actual_player} wins!')
             exit(0)
