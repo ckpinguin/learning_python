@@ -127,20 +127,16 @@ class TypingSpeedTestUI(Tk):
 
     def on_finish_word(self):
         answer = self.field_entry.get()
-        print(f"Processing word: {answer}")
-        self.ts.total_words_typed += 1
-        self.ts.total_characters_typed += len(answer)
 
         if self.ts.check_word_in_sentence(answer):
-            self.label_sentence.config(text=self.ts.sentence)
+            self.ts.update_stats(answer)
+            self.ts.remove_word_from_sentence(answer)
+            if self.ts.is_sentence_finished():
+                self.ts.set_new_random_sentence()
             # Only count correct typed words
             self.ts.calculate_typing_speed(
                 self.start_type_time, self.end_type_time)
-
-        print(f"Length of sentence: {
-              len(self.ts.sentence)} => {self.ts.sentence}")
-        if len(self.ts.sentence.strip()) < 2:
-            self.ts.set_new_random_sentence()
+        self.label_sentence.config(text=self.ts.sentence)
 
         self.display_typing_speed()
         self.field_entry.delete(0, END)
