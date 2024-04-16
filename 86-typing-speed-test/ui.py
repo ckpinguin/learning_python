@@ -9,14 +9,13 @@ FONT_NAME = "Arial"
 
 class TypingSpeedTestUI(Tk):
     def __init__(
-            self, ts_test: TypingSpeedTest, game_time=60, *args, **kwargs):
+            self, ts: TypingSpeedTest, game_time=60, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.ts_test = ts_test
+        self.ts = ts
 
         self.game_time = game_time
         self.remaining_game_time = self.game_time
 
-        self.sentence = ""
         self.running = False
         self.start_type_time = None
         self.end_type_time = None
@@ -57,9 +56,9 @@ class TypingSpeedTestUI(Tk):
         self.field_entry.grid(row=3, columnspan=4)
 
     def start_game(self):
-        self.reset_stats()
-        self.sentence = self.ts_test.create_random_sentence()
-        self.label_sentence.config(text=self.sentence)
+        self.ts.reset_stats()
+        self.ts.set_new_random_sentence()
+        self.label_sentence.config(text=self.ts.sentence)
         self.remaining_game_time = self.game_time
         self.running = True
         self.btn_start_stop.config(text="Stop", command=self.stop_game)
@@ -68,14 +67,6 @@ class TypingSpeedTestUI(Tk):
         self.field_entry.focus_set()
         self.bind_event_handlers()
         self.start_game_timer()
-
-    def reset_stats(self):
-        self.typing_speed_wpm = 0
-        self.typing_speed_cpm = 0
-        self.avg_typing_speed_wpm = 0
-        self.avg_typing_speed_cpm = 0
-        self.total_words_typed = 0
-        self.total_characters_typed = 0
 
     def bind_event_handlers(self):
         self.bind("<KeyPress>", self.on_key_pressed)
@@ -116,26 +107,8 @@ class TypingSpeedTestUI(Tk):
     def display_typing_speed(self):
         # Display the typing speed result
         result_text = f"Your average typing speed: {
-            self.typing_speed_wpm} WPM and {self.typing_speed_cpm} CPM"
+            self.ts.typing_speed_wpm} WPM and {self.ts.typing_speed_cpm} CPM"
         self.label_result.config(text=result_text)
-
-    def calculate_typing_speed(self):
-        # Calculate typing speed in words per minute (WPM) and
-        # types per minute (TPM)
-        if self.start_type_time is not None and self.end_type_time is not None:
-            elapsed_time = self.end_type_time - self.start_type_time
-            if elapsed_time > 0:
-                self.typing_speed_wpm = int(
-                    (self.total_words_typed / elapsed_time) * 60)
-                self.typing_speed_cpm = int(
-                    (self.total_characters_typed / elapsed_time) * 60)
-
-    def check_word_in_sentence(self, word) -> bool:
-        if word in self.sentence:
-            self.sentence = self.sentence.replace(word, "")
-            self.label_sentence.config(text=self.sentence)
-            return True
-        return False
 
     # Event handlers
 
@@ -155,14 +128,19 @@ class TypingSpeedTestUI(Tk):
     def on_finish_word(self):
         answer = self.field_entry.get()
         print(f"Processing word: {answer}")
-        self.total_words_typed += 1
-        self.total_characters_typed += len(answer)
+        self.ts.total_words_typed += 1
+        self.ts.total_characters_typed += len(answer)
 
-        if self.check_word_in_sentence(answer):
-            self.calculate_typing_speed()
+        if self.ts.check_word_in_sentence(answer):
+            self.label_sentence.config(text=self.ts.sentence)
+            # Only count correct typed words
+            self.ts.calculate_typing_speed(
+                self.start_type_time, self.end_type_time)
 
-        if len(self.sentence) < 2:
-            self.sentence = self.ts_test.create_random_sentence()
+        print(f"Length of sentence: {
+              len(self.ts.sentence)} => {self.ts.sentence}")
+        if len(self.ts.sentence.strip()) < 2:
+            self.ts.set_new_random_sentence()
 
         self.display_typing_speed()
         self.field_entry.delete(0, END)
