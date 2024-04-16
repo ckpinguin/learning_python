@@ -31,10 +31,11 @@ class QuizInterface:
                                    highlightbackground=THEME_COLOR,
                                    highlightthickness=0,
                                    command=lambda: self.check_answer("False"))
-        self.true_button = Button(image=self.true_image,
-                                  highlightbackground=THEME_COLOR,
-                                  highlightthickness=0,
-                                  command=lambda: self.check_answer("True"))
+        self.true_button = Button(
+            image=self.true_image,
+            highlightbackground=THEME_COLOR,
+            highlightthickness=0,
+            command=lambda: self.check_answer("True"))
         self.false_button.grid(
             row=2, column=0)
         self.true_button.grid(
@@ -44,6 +45,8 @@ class QuizInterface:
 
         self.window.mainloop()
 
+    # Violation of SRP, but we leave this method here for reference
+    # The UI should not „get“ or „check“ something outside
     def get_next_question(self):
         self.canvas.config(bg="white")
         if self.quiz.still_has_questions():
@@ -56,6 +59,7 @@ class QuizInterface:
             self.false_button.config(state="disabled")
             self.true_button.config(state="disabled")
 
+    # Violation of SRP, but we leave this method here for reference
     def check_answer(self, answer: str):
         if self.quiz.check_answer(answer) is True:
             self.flash_green()

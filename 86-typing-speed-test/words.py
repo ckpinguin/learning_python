@@ -1,0 +1,20 @@
+word_list = [
+    "apple", "banana", "orange", "grape", "kiwi", "pear",
+    "cat", "dog", "fish", "bird", "rabbit", "hamster",
+    "tree", "flower", "grass", "sun", "moon", "star",
+    "house", "car", "bicycle", "train", "plane", "boat",
+    "book", "pen", "pencil", "paper", "desk", "chair",
+    "computer", "keyboard", "mouse", "monitor", "printer",
+    "phone", "television", "radio", "clock", "lamp", "bed",
+    "table", "window", "door", "wall", "floor", "ceiling",
+    "mirror", "sink", "toilet", "shower", "bathtub", "towel",
+    "shirt", "pants", "shoes", "socks", "hat", "gloves",
+    "jacket", "coat", "dress", "skirt", "tie", "scarf",
+    "glasses", "umbrella", "bag", "backpack", "wallet", "purse",
+    "key", "lock", "ring", "bracelet", "necklace", "earrings",
+    "watch", "belt", "guitar", "piano", "violin", "drum",
+    "trumpet", "flute", "saxophone", "microphone", "camera", "painting",
+    "sculpture", "statue", "photograph", "drawing", "sketch", "canvas",
+    "brush", "palette", "easel", "color", "palette", "crayon",
+    "marker", "pencil", "chalk", "eraser", "sharpener", "ruler"
+]
