@@ -9,13 +9,14 @@ FONT_NAME = "Arial"
 
 class TypingSpeedTestUI(Tk):
     def __init__(
-            self, ts_test: TypingSpeedTest, game_time=10, *args, **kwargs):
+            self, ts_test: TypingSpeedTest, game_time=60, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ts_test = ts_test
 
         self.game_time = game_time
         self.remaining_game_time = self.game_time
 
+        self.sentence = ""
         self.running = False
         self.start_type_time = None
         self.end_type_time = None
@@ -58,7 +59,7 @@ class TypingSpeedTestUI(Tk):
     def start_game(self):
         self.reset_stats()
         self.sentence = self.ts_test.create_random_sentence()
-        self.label_sentence
+        self.label_sentence.config(text=self.sentence)
         self.remaining_game_time = self.game_time
         self.running = True
         self.btn_start_stop.config(text="Stop", command=self.stop_game)
@@ -129,6 +130,13 @@ class TypingSpeedTestUI(Tk):
                 self.typing_speed_cpm = int(
                     (self.total_characters_typed / elapsed_time) * 60)
 
+    def check_word_in_sentence(self, word) -> bool:
+        if word in self.sentence:
+            self.sentence = self.sentence.replace(word, "")
+            self.label_sentence.config(text=self.sentence)
+            return True
+        return False
+
     # Event handlers
 
     def on_key_pressed(self, event):
@@ -149,9 +157,13 @@ class TypingSpeedTestUI(Tk):
         print(f"Processing word: {answer}")
         self.total_words_typed += 1
         self.total_characters_typed += len(answer)
-        print(f"Words typed so far: {self.total_words_typed}")
-        print(f"Characters typed so far: {self.total_characters_typed}")
-        self.calculate_typing_speed()
+
+        if self.check_word_in_sentence(answer):
+            self.calculate_typing_speed()
+
+        if len(self.sentence) < 2:
+            self.sentence = self.ts_test.create_random_sentence()
+
         self.display_typing_speed()
         self.field_entry.delete(0, END)
 
