@@ -3,6 +3,7 @@ from paddle import Paddle
 from ball import Ball
 from brick import Brick
 from scoreboard import Scoreboard
+from message import Message
 import time
 import random
 
@@ -12,8 +13,8 @@ BALL_SIZE = 20
 PADDLE_TORQUE = 20
 DEFAULT_GAME_SPEED = 0.02
 GAME_ACCELERATION = 1.05
-NUM_BRICK_ROWS = 3
-NUM_BRICKS_PER_ROW = 6
+NUM_BRICK_ROWS = 1
+NUM_BRICKS_PER_ROW = 1
 BRICK_WIDTH = 80
 BRICK_HEIGHT = 30
 BRICK_SPACING = 10
@@ -35,10 +36,11 @@ screen.mode("logo")
 paddle = Paddle(torque=PADDLE_TORQUE)
 ball = Ball(size=BALL_SIZE, x=0, y=-220)
 scoreboard = Scoreboard()
+msg = Message()
+msg.write_message()
 
 
 all_bricks = []
-
 
 keys_pressed = set()
 
@@ -52,13 +54,16 @@ def get_random_color():
 def setup_bricks():
     for row in range(NUM_BRICK_ROWS):
         print("Row: ", row)
+        row_y = 200 - row * (BRICK_HEIGHT + BRICK_SPACING)
+
         for col in range(NUM_BRICKS_PER_ROW):
             print("Col: ", col)
+            col_x = -250 + (BRICK_WIDTH + BRICK_SPACING) * col
+
             brick = Brick(width=BRICK_WIDTH,
                           height=BRICK_HEIGHT,
-                          x=-250 + (BRICK_WIDTH + BRICK_SPACING)
-                          * col,
-                          y=100 + (BRICK_HEIGHT + BRICK_SPACING) * row,
+                          x=col_x,
+                          y=row_y,
                           color=get_random_color(), shape="square")
             all_bricks.append(brick)
 
@@ -149,6 +154,7 @@ def reset_field_after_loss():
 
 def tick():
     global game_speed
+    global game_is_running
     for action in keys_pressed:
         actions[action]()
 
@@ -168,6 +174,11 @@ def tick():
         all_bricks.remove(brick)
         print("Bricks left: ", len(all_bricks))
         brick.hideturtle()
+        if len(all_bricks) == 0:
+            msg.write_message("You win!", "green")
+            screen.update()
+            game_is_running = False
+            time.sleep(2)  # Pause for 2 seconds before exiting
 
     if detect_side_wall_collision():
         print("Bouncing off side wall")
@@ -180,6 +191,13 @@ def tick():
 
     if detect_bottom_wall_collision():
         print("Hitting bottom wall => you lose!")
+        print("len(all_bricks): ", len(all_bricks))
+        scoreboard.dec_lives()
+        if scoreboard.lives == 0:
+            msg.write_message("You lose!", "red")
+            screen.update()
+            game_is_running = False
+            time.sleep(2)
         reset_field_after_loss()
 
     ball.move()
