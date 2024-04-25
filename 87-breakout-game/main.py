@@ -4,6 +4,7 @@ from ball import Ball
 from brick import Brick
 from scoreboard import Scoreboard
 import time
+import random
 
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
@@ -11,6 +12,11 @@ BALL_SIZE = 20
 PADDLE_TORQUE = 20
 DEFAULT_GAME_SPEED = 0.02
 GAME_ACCELERATION = 1.05
+NUM_BRICK_ROWS = 3
+NUM_BRICKS_PER_ROW = 6
+BRICK_WIDTH = 80
+BRICK_HEIGHT = 30
+BRICK_SPACING = 10
 
 
 y_wall = SCREEN_HEIGHT / 2 - BALL_SIZE
@@ -29,10 +35,32 @@ screen.mode("logo")
 paddle = Paddle(torque=PADDLE_TORQUE)
 ball = Ball(size=BALL_SIZE, x=0, y=-220)
 scoreboard = Scoreboard()
-brick1 = Brick(width=100, height=30, x=-250,
-               y=100, color="red", shape="square")
+
+
+all_bricks = []
+
 
 keys_pressed = set()
+
+
+def get_random_color():
+    return random.choice(["red", "green", "blue", "yellow",
+                          "orange", "purple", "white", "pink",
+                          "cyan", "magenta"])
+
+
+def setup_bricks():
+    for row in range(NUM_BRICK_ROWS):
+        print("Row: ", row)
+        for col in range(NUM_BRICKS_PER_ROW):
+            print("Col: ", col)
+            brick = Brick(width=BRICK_WIDTH,
+                          height=BRICK_HEIGHT,
+                          x=-250 + (BRICK_WIDTH + BRICK_SPACING)
+                          * col,
+                          y=100 + (BRICK_HEIGHT + BRICK_SPACING) * row,
+                          color=get_random_color(), shape="square")
+            all_bricks.append(brick)
 
 
 def pause_game():
@@ -56,21 +84,35 @@ def pause_loop():
         screen.update()
 
 
-def detect_side_wall_collision():
+def detect_side_wall_collision() -> bool:
     return abs(ball.xcor()) >= x_wall
 
 
-def detect_brick_collision():
-    print
-    return False
-
-
-def detect_top_wall_collision():
+def detect_top_wall_collision() -> bool:
     return ball.ycor() >= y_wall
 
 
-def detect_bottom_wall_collision():
+def detect_bottom_wall_collision() -> bool:
     return ball.ycor() <= -SCREEN_HEIGHT / 2
+
+
+def detect_brick_collision() -> Brick | None:
+    ball_x, ball_y = ball.position()
+    for brick in all_bricks:
+        brick_x, brick_y = brick.position()
+        brick_width = brick.width
+        brick_height = brick.height
+        margin = 10
+
+        if (
+            brick_x - brick_width / 2 <= ball_x <= brick_x + brick_width / 2 + margin  # noqa
+            and brick_y - brick_height / 2 <= ball_y <= brick_y + brick_height / 2 + margin  # noqa
+        ):
+            print("Brick collision detected")
+            print("ball_x: ", ball_x, "ball_y: ", ball_y)
+            print("brick_x: ", brick_x)
+            return brick
+    return None
 
 # Since the paddle is rectangular, we need to check for collision on both
 # the x and y axis, the distance method alone is not sufficient
@@ -115,12 +157,17 @@ def tick():
     if detect_top_wall_collision():
         print("Bouncing off top wall")
         ball.bounce_off_x_walls()
-        # ball.bounce()
 
-    if detect_brick_collision():
+    brick: Brick | None = detect_brick_collision()
+    if brick:
         print("Bouncing off brick")
         scoreboard.inc_score()
+        scoreboard.write_board()
         ball.bounce_off_x_walls()
+        print("Removing brick")
+        all_bricks.remove(brick)
+        print("Bricks left: ", len(all_bricks))
+        brick.hideturtle()
 
     if detect_side_wall_collision():
         print("Bouncing off side wall")
@@ -156,6 +203,8 @@ screen.listen()
 
 pause = False
 game_is_running = True
+
+setup_bricks()
 
 while game_is_running:
     tick()
