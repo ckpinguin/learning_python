@@ -17,7 +17,7 @@ x_wall = SCREEN_WIDTH / 2 - BALL_SIZE
 
 game_speed = DEFAULT_GAME_SPEED
 
-print(f"y_wall: {y_wall}, x_wall: {x_wall}")
+# print(f"y_wall: {y_wall}, x_wall: {x_wall}")
 screen = Screen()
 screen.bgcolor("black")
 screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
@@ -25,8 +25,8 @@ screen.tracer(0)
 screen.title("Breakout!")
 screen.mode("logo")
 
-paddle = Paddle()
-ball = Ball()
+paddle = Paddle(torque=PADDLE_TORQUE)
+ball = Ball(size=BALL_SIZE)
 scoreboard = Scoreboard()
 
 keys_pressed = set()
@@ -53,47 +53,84 @@ def pause_loop():
         screen.update()
 
 
-def detect_x_wall_collision():
+def detect_side_wall_collision():
     return abs(ball.xcor()) >= x_wall
 
 
-def detect_paddle_collision(paddle):
-    return ball.distance(paddle) <= 50 \
-        and abs(ball.xcor()) > x_wall - 40
+def detect_brick_collision():
+    print
+    return False
 
 
-def get_paddle_torque_offset(paddle: Paddle):
-    if paddle.last_move == "Left":
-        return -PADDLE_TORQUE
+def detect_top_wall_collision():
+    return ball.ycor() >= y_wall
+
+
+def detect_bottom_wall_collision():
+    return ball.ycor() <= -SCREEN_HEIGHT / 2
+
+# Since the paddle is rectangular, we need to check for collision on both
+# the x and y axis, the distance method alone is not sufficient
+
+
+def detect_paddle_collision(paddle: Paddle):
+    ball_x, ball_y = ball.position()
+    paddle_x, paddle_y = paddle.position()
+    paddle_width = paddle.width
+    paddle_height = paddle.height
+    margin = 10
+
+    if (
+        paddle_x - paddle_width / 2 <= ball_x <= paddle_x + paddle_width / 2 + margin  # noqa
+        and paddle_y - paddle_height / 2 <= ball_y <= paddle_y + paddle_height / 2 + margin  # noqa
+    ):
+        print("Paddle collision detected")
+        print("ball_x: ", ball_x, "ball_y: ", ball_y)
+        print("paddle_x: ", paddle_x)
+        return True
     else:
-        return +PADDLE_TORQUE
+        return False
 
 
-def reset_field_after_score():
-    scoreboard.write_board()
+def reset_field_after_loss():
     global game_speed
+    scoreboard.write_board()
     game_speed = DEFAULT_GAME_SPEED
     ball.reset_to_start()
+    paddle.reset_to_start()
+    screen.update()
+    time.sleep(1)
 
 
 def tick():
     global game_speed
     for action in keys_pressed:
         actions[action]()
-    screen.update()
-    if detect_x_wall_collision():
-        ball.bounce_off_y_walls()
-        # ball.bounce()
-    if detect_paddle_collision(paddle):
-        game_speed *= 1 / GAME_ACCELERATION
-        ball.bounce_off_paddle(get_paddle_torque_offset(paddle))
 
-    if ball.ycor() > y_wall - 10:
-        scoreboard.inc_l_score()
-        reset_field_after_score()
-    if ball.ycor() < -y_wall + 10:
-        scoreboard.inc_r_score()
-        reset_field_after_score()
+    screen.update()
+
+    if detect_top_wall_collision():
+        print("Bouncing off top wall")
+        ball.bounce_off_x_walls()
+        # ball.bounce()
+
+    if detect_brick_collision():
+        print("Bouncing off brick")
+        scoreboard.inc_score()
+        ball.bounce_off_x_walls()
+
+    if detect_side_wall_collision():
+        print("Bouncing off side wall")
+        ball.bounce_off_y_walls()
+
+    if detect_paddle_collision(paddle):
+        print("Bouncing off paddle")
+        game_speed *= 1 / GAME_ACCELERATION
+        ball.bounce_off_paddle(paddle.get_torque_offset())
+
+    if detect_bottom_wall_collision():
+        print("Hitting bottom wall => you lose!")
+        reset_field_after_loss()
 
     ball.move()
     time.sleep(game_speed)
@@ -106,7 +143,9 @@ actions = dict(
 )
 
 screen.onkeypress(lambda: keys_pressed.add("left"), key="Left")
+screen.onkeyrelease(lambda: keys_pressed.remove("left"), key="Left")
 screen.onkeypress(lambda: keys_pressed.add("right"), key="Right")
+screen.onkeyrelease(lambda: keys_pressed.remove("right"), key="Right")
 
 screen.onkeyrelease(pause_game, "p")
 
