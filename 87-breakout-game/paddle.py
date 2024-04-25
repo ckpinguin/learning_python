@@ -5,13 +5,13 @@ class Paddle(Turtle):
 
     STEP_SIZE = 10
 
-    def __init__(self, width=200, height=20, x_pos=150, y_pos=-200, min_x=-100, max_x=100):  # noqa
+    def __init__(self, width=100, height=20, x_pos=0, y_pos=-250, min_x=-150, max_x=150):  # noqa
         super().__init__()
         self.min_x = min_x
         self.max_x = max_x
         self.shape("square")
         self.color("white")
-        self.shapesize(stretch_wid=1, stretch_len=5)
+        self.shapesize(stretch_wid=5, stretch_len=1)
         self.width = width
         self.height = height
         self.speed('fastest')

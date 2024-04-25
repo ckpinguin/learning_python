@@ -13,7 +13,7 @@ class Ball(Turtle):
         self.setheading(0)
 
     def reset_to_start(self):
-        self.goto(0, 0)
+        self.goto(0, -250)
 
     def move(self, speed=DEFAULT_SPEED):
         self.clear()
@@ -23,4 +23,4 @@ class Ball(Turtle):
         self.setheading((-self.heading() + offset) % 360)
 
     def bounce_off_y_walls(self):
-        self.setheading(180 - self.heading())
+        self.setheading(0 - self.heading())
