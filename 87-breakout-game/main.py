@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddle import Paddle
 from ball import Ball
+from brick import Brick
 from scoreboard import Scoreboard
 import time
 
@@ -26,8 +27,10 @@ screen.title("Breakout!")
 screen.mode("logo")
 
 paddle = Paddle(torque=PADDLE_TORQUE)
-ball = Ball(size=BALL_SIZE)
+ball = Ball(size=BALL_SIZE, x=0, y=-220)
 scoreboard = Scoreboard()
+brick1 = Brick(width=100, height=30, x=-250,
+               y=100, color="red", shape="square")
 
 keys_pressed = set()
 

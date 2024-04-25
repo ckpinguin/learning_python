@@ -5,17 +5,21 @@ class Ball(Turtle):
 
     DEFAULT_SPEED = 5
 
-    def __init__(self, size=20):
+    def __init__(self, size=20, x=0, y=-220):
         super().__init__()
         self.color("white")
         self.shape("circle")
         self.penup()
         self.setheading(0)
+        self.goto(x, y)
+        self.pendown()
         self.size = size
 
     def reset_to_start(self):
+        self.penup()
         self.goto(0, -220)
         self.setheading(0)
+        self.pendown()
 
     def move(self, speed=DEFAULT_SPEED):
         self.clear()
