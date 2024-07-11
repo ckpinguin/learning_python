@@ -1,0 +1,744 @@
+  
+ 
+ 
+  
+ 
+Datenaustausch Quellensteuer - 
+abrechnung gemäss Bundesgesetz 
+gegen die Schwarzarbeit (DA QST  
+BGSA)  
+Meldungsspezifikation 
+Meldung 3 302/000001 und 
+3302/000002  
+Schweizerische Steuerkonferenz SSK  
+Verein eAHV/IV  
+Projekt -Nr. 12.516. 05.10   
+ 
+ 2/18 
+Dokumentinformationen  
+Titel:  Meldungsspezifikation Meldung 3302/000001 und 3302/000002  
+Version:  1.0 
+Anzahl Seiten:  18  
+Dateiname:  Dok_191220_Meldungsspezifikation_QST -BGSA_V1 -0_DE  
+Geprüft durch : Arbeitsgruppe DA QST BGSA  
+Versionen  
+Version  Datum  Wichtigste Änderungen  Verantwortlich  
+V0.1 29.04.2019  Erster Entwurf  A. Artinian -Adam  (AWK) ; 
+L. Steffen (AWK)  
+V0.8 27.05.2019  Ergänzungen gemäss der Sitzung v om 10. Mai 2019  A. Artinian -Adam  (AWK) ; 
+L. Steffen (AWK)  
+V0.9 27.06.2019  Anpassungen gemäss Befunden aus Review in der Ar-
+beitsgruppe DA QST BGSA:  
+- Sprachliche Korrekturen  
+- Änderung der maximalen Länge der Bemerkung 
+bei Rückmeldungen  A. Artinian -Adam  (AWK) ; 
+L. Steffen (AWK)  
+V1.0 20.12.2019  Gemäss Entscheid der Sitzung vom 23. Oktober 2019:  
+– Eine Meldung enthält nur Abrechnungen vom 
+gleichen Kalender - bzw. Steuerjahr . 
+– Ergänzung von optionalen Angaben zum Arb eit-
+geber (UID oder AHVN13)  
+– Ergänzung bzgl. Nummer der Ausgleichskasse 
+in Kapitel 3.2.1  A. Artinian -Adam  (AWK) ; 
+L. Steffen (AWK)  
+Abkürzungen und Begriffe  
+Abkürzung  Beschreibung  
+BGSA  Bundesgesetz über Massnahmen zur Bekämpfung der 
+Schwarzarbeit  (SR 822.41 ) 
+DA Datenaustausch  
+QST Quellensteuer  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+AWK  GROUP  AG 
+Leutschenbachstrasse 45, Postfach, CH -8050 Zürich,  
+T +41 58 411 95 0 0, www.awk.ch  Zürich  •  Bern  •  Basel  •  Lausanne  
+ 
+   
+ 
+ 3/18 
+Referenzierte Dokumente  
+Titel Autor / Herausgeber  Datum  Link / Datei  
+[1] Detailkonzept Meldungsformat 
+v2.4 (mit dem ssk -common 
+v2.0)  SSK & BSV  21.12.2018 Link 
+[2] Kreisschreiben über die Quel-
+lensteuer des Bundesamts für 
+Sozialversicherungen BSV 
+(KSQST ) BSV 13.12.2018  Link 
+[3] Merkblatt Nr. 2.07 der 
+AHV/IV/EO/ALV über das ver-
+einfachte Abrechnungsverfah-
+ren für Arbeitgebende vom 
+31.12.2018  Informationsstelle AHV/IV 
+und BSV  Nov. 2018  Link 
+ 
+Arbeitsgruppe DA QST  BGSA  
+Die Arbeitsgruppe DA QST  BGSA hat die Meldungsspezifikation erarbeitet und besteht aus Vertre-
+tern der Schweizerischen Steuerkonferenz SSK, von eAHV/IV, Ausgleichskassen und I T der 
+Durchführungsstellen  
+Name  Institution  
+Alexandra Artinian  AWK Group AG  
+Rolf Abbühl  Steuerverwaltung des Kantons Bern  
+Max Baumann  Administration cantonale des impôts du canton Vaud  
+Karin Dobmeier  Steuerverwaltung des Kantons Basel -Stadt  
+Daniel Ehrler  eAHV/IV  
+Philipp Etter  Ausgleichskasse des Schweizerischen Gewerbes (AK 105) 
+Peter Fuhrmann  Kantonale Steuerverwaltung des Kantons Schwyz  
+Andreas Pfeiffer  SVA ZH  
+Paolo Pierobon  Inforom  
+Karin Schlatter  Hotela  
+Lars Steffen  AWK Group AG  
+Alfredo Studer  IGAKIS  
+ 
+    
+ 
+ 4/18 
+Inhaltsverzeichnis  
+1. Zusammenfassung  ................................ ................................ ................................ ..................  5 
+2. Einleitung  ................................ ................................ ................................ ................................ . 5 
+2.1. Ausgangslage  ................................ ................................ ................................ ...............  5 
+2.2. Zielsetzung  und Rahmenbedingungen  ................................ ................................ ..........  5 
+2.3. Gesetzliche Grundlagen  ................................ ................................ ...............................  6 
+3. Meldungsprozess und fachliche Anwendungsbestimmungen  ................................ ..................  6 
+3.1. Gesamtsicht Meldungsprozess  ................................ ................................ .....................  6 
+3.2. Fachlicher Aufbau der Meldung QST BGSA  ................................ ................................ . 8 
+3.2.1.  Angaben zur sendenden Ausgleichskasse  ................................ .....................  9 
+3.2.2.  Aufbau der Einzelabrechnung  ................................ ................................ ........  9 
+3.2.3.  Abrechnungstotale  ................................ ................................ .......................  10 
+3.3. Periodizität  ................................ ................................ ................................ ..................  10 
+3.4. Korrekturen  ................................ ................................ ................................ .................  10 
+3.5. An falschen  Empfänger gesendete Einzelabrechnungen  ................................ ............  11 
+3.6. Fachliche Rückmeldungen zur Meldung  ................................ ................................ ..... 11 
+4. Technische Spezifikation  ................................ ................................ ................................ ....... 12 
+4.1. Technische Anwendungsbestimmungen  ................................ ................................ ..... 12 
+4.1.1.  Grundsätzlicher Aufbau einer Meldung ................................ .........................  12 
+4.1.2.  sedex Umschlag gemäss eCH -0090  ................................ ............................  13 
+4.1.3.  Aufbau des sedex -Nutzdatenpakets (message_X.xml)  ................................  13 
+4.1.4.  Fachliche Quittierung  ................................ ................................ ...................  14 
+4.1.5.  Weiterleitung, Korrektur und Storno  ................................ .............................  14 
+4.1.6.  Sammelmeldungen  ................................ ................................ ......................  14 
+4.2. Meldungsrahmen  ................................ ................................ ................................ ........  14 
+4.3. Meldungst ypen und Submeldungstypen  ................................ ................................ ..... 16 
+4.4. Technische Spezifikation der fachlichen Elemente und Datentypen ............................  16 
+4.4.1.  Meldung 3xxx/000001 «QST BGSA»  ................................ ...........................  16 
+4.4.2.  Meldung 3xxx/000002 «Rückmeldung QST BGSA»  ................................ ..... 16 
+4.4.3.  XML-Datentypen  ................................ ................................ ..........................  17 
+ 
+    
+ 
+ 5/18 
+1. Zusammenfassung  
+Die vorliegende Meldungsspezifikation beschreibt, wie die sedex -Meldungen des Daten-
+austausches  «Quellensteuerabrechnung gemäss Bundesgesetz gegen die Schwarzarbeit 
+(BGSA) » kurz «DA QST BGSA » aufgebaut sein müssen.  Der Datenaustausch besteht 
+aus zwei Meldungen: Eine Meldung der Ausgleichskassen an die kantonalen Steuerver-
+waltungen mi t den Einzelabrechnungen sowie eine optionale Rückmeldung, mit welcher 
+die kantonale Steuerverwaltung bei Bedarf diejenigen Einzelabrechnungen melden kön-
+nen, für welche sie nicht zuständig ist.  
+2. Einleitung  
+2.1. Ausgangslage  
+Im vereinfachten Abrechnungsverfahren gemäss Bundesgesetz gegen die Schwarzarbeit 
+(BGSA , SR 822.41)  ziehen Arbeitgeber die Sozialversicherungsbeträge und Steuern  dem 
+Arbeitnehmer vom Lohn ab und rechnen  diese  mit der Ausgleichskasse ab.  Die Steuern 
+werden somit an der Quelle erhoben (Quellenst euer) . Im Unterschied zum «ordentlichen» 
+Quellensteuerverfahren gemäss Art. 83 – 101 DBG kann das vereinfachte Abrechnungs-
+verfahren sowohl für  quellensteuerpflichtige Personen als auch für Personen, welche der 
+ordentlichen Besteuerung unterliegen , angewendet werden.  
+Die Ausgleichskasse rechnet die Steuern anschliessend mit der kantonalen Steuerver-
+waltung ab. Die Abrechnung im vereinfachten Verfahren  erfolgt  pro Kalenderjahr . Der 
+Steuersatz beträgt 5 Prozent (0.5 % DBSt, 4.5 % Kantons - und Gemeindes teuern).  Als 
+Entschädigung für die Abrechnung und den Bezug der Quellensteuer erhalten die Aus-
+gleichskassen eine Bezugsprovision  von 10% des gesamten Quellensteuerbetrages  (Art. 
+1 Abs. 5 VOSA, SR  822.411) .  
+2.2. Zielsetzung  und Rahmenbedingungen  
+Ziel der vorlie genden Meldungsspezifikation ist die elektronische Übermittlung der im ver-
+einfachten Abrechnungsverfahren von den Ausgleichskassen an die kantonalen Steuer-
+verwaltungen gesendeten Steuera brechnungen via sedex.  
+Eine elektronische Einreichung der Abrechnung d urch den Arbeitgeber bei der Aus-
+gleichskasse ist nicht Bestandteil der vorliegenden Spezifikation.  
+ 
+  
+Abbildung 1: Überblick  
+ 
+Arbeitgeber Ausgleichskasse Kantonale 
+Steuerverwaltung
+Arbeitnehmer
+LohnzahlungAbrechnung der Sozial -
+versicherungsbeiträge 
+und SteuernAbrechnung der 
+Steuern
+Umfang der Meldungsspezifikation
+  
+ 
+ 6/18 
+Der elektronische Versand bei den Ausgleichskassen wird schrittweise eingeführt.  Ab 
+einem noch zu de finierenden Termin gilt für die Ausgleichskassen eine Versandpflicht. 
+Alle kantonalen Steuerverwaltungen werden die Meldungen ab dem noch zu bestimmen-
+den Einführungstermin empfangen  können  (Empfangspflicht) . Die Empfangspflicht wird 
+durch den sM-Client gewährleistet.  
+2.3. Gesetzliche Grundlagen  
+Der Datenaustausch im vereinfachten Abrechnungsverfahren basiert auf den folgenden 
+gesetzlichen Grundlagen  
+• Bundesgesetz über Massnahmen zur Bekämpfung der Schwarzarbeit  (BGSA, 
+SR  822.41 ) 
+• Bundesgesetz über die direkte Bundessteuer (DBG, SR 642.11), insbesondere 
+Art. 37a 
+• Verordnung des EFD über die Quellensteuer bei der direkten Bundessteuer  (QStV, 
+SR  642.118.2) , insbesondere Art . 17a – 17d (in der revidierten Quellensteuerverord-
+nung Art. 21 - 24, Inkrafttreten per 01.01.2021)  
+• Kreisschreiben über die Quellensteuer des Bundesamt s für Sozialversicherungen 
+BSV (KSQST ) 
+• Merkblatt Nr. 2.07 der AHV/IV/EO/ALV über das vereinfachte Abrechnungsverfahr en 
+für Arbeitgebende vom 31.12.2018  
+• Bundesgesetz über den Datenschutz (DSG,  SR  235.1), insbesondere Art . 4 
+3. Meldungsprozess und fachliche 
+Anwendungsbestimmungen  
+3.1. Gesamtsicht Meldungsprozess  
+Abbildung 2 zeigt den Datenaustausch «Quellensteuerabrechnung gemäss Bundesge-
+setz gegen die Schwarzarbeit (DA QST BGSA )» im Kontext des vereinfachten Abrech-
+nungsverfahrens.  Der DA QST BGSA enthält die Über mittlung der Quellensteuerabrech-
+nung von der Ausgleichskasse z ur kantonalen Steuerverwaltung (QST BGSA, roter Pfeil) 
+und eine optionale Rückmeldung  der kantonalen Steuerverwaltung bei an den falschen 
+Empfänger gesendete n Einzelabrechnungen (Rückmeldung QST  BGSA, Pfeil  in türkis ).   
+ 
+ 7/18 
+AusgleichskasseKantonale 
+SteuerverwaltungAnmeldung 
+prüfenAbrechnung 
+bzw. Meldung 
+zusammen -
+stellenMeldung 
+versendenArbeitgeber -
+Abrechnungen 
+prüfen & 
+abwickelnArbeitnehmer
+Steuern 
+überweisenArbeitgeber -Abrechnung
+(1x jährlich)
+Arbeitgeber -
+Abrechnungen 
+sammeln
+Meldung
+ verarbeitenRechnung 
+stellen und 
+Inkasso führenQST BGSAAnmeldungArbeitnehmerArbeitgeber
+12
+35
+6Korrekturen zu 
+verarbeiteten 
+Abrechnungen 
+erfassenRückmeldung
+QST BGSA
+74
+Korrekturbedarf 
+festgestellt 
+Abbildung 2: Einbettung des Meldungsprozesses in den Kontext der umgebenden Prozesse  
+ 
+Nachfolgend sind die relevanten Prozessschritte des vereinfachten Abrechnungsverfah-
+rens in Bezug auf den Datenaustausch QST  BGSA erklärt. Zwecks Verständlichkeit und 
+Übersichtlichkeit wurde auf die Darstellung einiger der unten beschriebenen Prozess-
+schritte in Abbildung 2 verzichtet (z.B.  Mahnung).  
+ 
+Nr. Beschreibung  
+1.  Der Arbeitgeber meldet sich für das vereinfachte Abrechnungsverfahren bei der Ausgleichkasse 
+an. 
+Die Ausgleichskasse überprüft, ob die Vorgaben für die Anwendung des vereinfachten Abrech-
+nungsverfahrens (u.a. Ausschluss von Kapitalgesellschafen und Familienzugehörigkeiten , Vorga-
+ben bzgl. Grenzgänger ) erfüll t sind . Die Vorgaben sind im Merkblatt Nr. 2.07 der AHV/IV  [3] zu-
+sammengefasst . 
+2.  Der Arbeitgeber zieht auf den Lohnzahlungen die Sozialversicherungsbeiträge und die Quellen-
+steuer zu Lasten des Arbeitnehme rs ab (nicht in der Abbildung) . 
+Der Arbeitgeber muss die zurückbehaltenen Beiträge sowie Steuern aller Arbeitnehm er in Form 
+einer Arbeitgeber -Abrechnung  deklarieren und  bis am 30.  Januar des Folgejahres bei der Aus-
+gleichskasse einreichen.   
+3.  Die Ausgleichskassen überprüfen die eingereichten Abrechnungen, stellen für die Sozialversiche-
+rungsbeiträge und die Quellensteuer eine Rechnung aus und stellen dem Arbeit nehmer  eine Be-
+scheinigung über die Bezahlung der Steuern aus . 
+Die Ausgleichskassen überprüfen die Einreichung der Abrechnungen und mahnen die Arbeitgeber 
+bei Bedarf. Kommt der Arbeitgeber seiner Abrechnungs - oder Zahlungspflicht auch nach Mahnun-
+gen nicht nach, kann  dieser rückwirkend vom vereinfachten Verfahren ausgeschlossen werden.  
+Ein Ausschluss aus dem vereinfachten Verfahren bedeutet ein Wechsel ins ordentliche Verfahren  
+zur Abrechnung der Sozialversicherungsbeiträge sowie steuerlich ein Wechsel in die ordentliche  
+Veranlagung bzw. die «ordentliche» Quellensteuerpflicht.  Ein Ausschluss erfolgt in der Regel bis 
+spätestens Ende August.     
+ 
+ 8/18 
+Nr. Beschreibung  
+4.  Erfolgt ein Ausschluss vor der Abrechnung mit der kantonalen Steuerverwaltung, wird diese nicht 
+informiert. Ist die Abrechnung mit der kantonalen Steuerverwaltung bereits erfolgt, korrigiert die 
+Ausgleichskasse dies.  
+In seltenen Fällen können auch andere Gründe zu einer nachträglichen Korrektur führen.  
+5.  Die Ausgleichskassen rechnen die Quellensteuer n mit den kantonalen  Steuerverwaltungen ab.  
+Die Quellensteuer wird nicht pro Arbeitgeber,  sondern jeweils gesammelt für mehrere Arbeitgeber 
+zusammen abgerechnet.  Der Zeitpunkt der Abrechnung mit den kantonalen Steuerverwaltungen 
+hängt von den Ausgleichskassen ab, wobei mehrhe itlich mehrere Abrechnungen pro Jahr versen-
+det werden.  
+6.  Die kantonalen Steuerverwaltungen buchen die gemeldeten Beiträge ein  und senden auf Grund-
+lage der Abrechnung den Ausgleichskassen eine Rechnung. Bei individueller Vereinbarung der 
+Ausgleichskassen überweisen diese die Beträge zusammen mit dem Versand der Abrechnung.  
+Die Steuern werden  nach den gesetzlichen Vorgaben  auf Bund, Kanton und Gemeinde aufgeteilt. 
+Grundsätzlich ist für die Verteilung der Steuern der Wohnort bei in der Schwe iz ansässigen Perso-
+nen und der Sitz der Ausgleichskasse  bei Grenzgängern relevant.  
+7.  Erhält die kantonale Steuerverwaltung Einzelabrechnungen von Personen, welche nicht in ihrem 
+Kanton steuerpflichtig sind, informier t sie die Ausgleichskasse . Die kantonal en Steuerverwaltun-
+gen können diese Einzelabrechnungen via sedex mit der Meldung « Rückmeldung  QST BGSA » 
+zurückweisen und der Ausgleichskasse , falls bekannt , den korrekten Kanton mitteilen. Zur Erfas-
+sung dieser Meldung wird ein Formularservice auf dem sM -Client zur Verfügung gestellt. Die Aus-
+gleichkasse nimmt dann eine Korrektur vor.   
+Tabelle 1: Beschreibung der Prozessschritte  
+3.2. Fachlicher Aufbau der Meldung  QST BGSA  
+Die Ausgleichskasse bereitet  allenfalls periodisch  pro kantonale S teuerverwaltung eine 
+Meldung auf und adressiert diese gemäss Kapitel  4.2. In einer Meldung werden die Ab-
+rechnungsdaten von unterschiedlichen Arbeitgebern übermittelt. Geht ein Arbeitnehmer 
+mehreren Beschäftigungen nach, kann dieser mehrfach in derselben Meldung ersc hei-
+nen.  
+Die Meldung der Ausgleichskasse ist fachlich wie folgt strukturiert  (vgl. Abbildung 3): 
+• Angaben zur sendenden Ausgleichskasse  
+• Pro Beschäftigung e ines Arbeitnehmers die Personenangaben und die Abrech-
+nungsdetails (nachfolgend Einzelabrechnung genannt)  
+• Abrechnungstotale über die gesamte Meldung    
+ 
+ 9/18 
+ 
+Abbildung 3: Skizze Meldungsaufbau  
+3.2.1.  Angaben zur sendenden Ausgleichskasse  
+Zur eindeutigen Identifikation der  sendende n Ausgleichskasse wird nebst der  sedex -ID 
+(gemäss Kapitel 4.2) auch die UID -Nummer und die SSL -Nummer (SSL  = Schuldner der 
+steuerbaren Leistung)  übermittelt. Die SSL -Nummer wird von der jeweiligen kantonalen 
+Steuerverwaltung vergeben und muss vor der ersten Abrechnung  (Papier oder elektro-
+nisch)  gelöst werden. Wird nach  der Einführung vom Papierversand auf den Ver sand via 
+sedex um gestellt, muss keine neue SSL -Nummer gelöst werden. Die Nummer der Aus-
+gleichskasse (z.B. «44» für Hotela) ist nicht zu übermitteln, da diese Nummer Teil der se-
+dex-ID ist. Mit der Meldung werden zudem die Angaben einer Kontaktperson für den  Aus-
+tausch bei Fragen oder Problemen sowie die Adresse der Ausgleichskasse für die Rech-
+nungsstellung übermittelt.  
+3.2.2.  Aufbau der Einzelabrechnung  
+In der Regel wird für eine Person ein Eintrag («Zeile») pro Jahr und Arbeitgeber gemel-
+det, auch wenn die Person w ährend des Jahres mit Unterbrüchen gearbeitet hat.  
+Die pro Einzelabrechnung mitgesendeten Personendaten dienen zur eindeutigen Identifi-
+kation des Arbeitnehmers . Die Ausgleichskasse übermittelt für alle Arbeitnehmer die kor-
+rekte AHV -Nummer (AHVN13) mit der Abrechnung. Zusätzlich werden der Vor - und 
+Nachname  sowie das Geburtsdatum  des Arbeitnehmers übermittelt. Kann die kantonale 
+Steuerverwaltung einen Arbeitnehmer mit der AHV -Nummer nicht eindeutig im Steuerre-
+gister identifizieren, können sie mit diesen zusä tzlichen Daten weitere Register (z.B. 
+ZEMIS oder UPI) beiziehen.  
+Pro Einzelabrechnung werden folgende Abrechnungsdetails übermittelt (gemäss [2]): 
+• Beschäftigungsperiode  
+• Name des Arbeitgebers  (optional zudem die UID und die AHVN13)  
+• Wohn adresse  
+• Bruttolohn  
+• Quellensteuerbetrag  
+QST-BGSA 
+(Meldungsinhalt)
+Einzelabrechnung 1
+Einzelabrechnung 2
+Einzelabrechnung 3Angaben zur Ausgleichskasse
+AbrechnungstotaleEinzelabrechnung 4
+Einzelabrechnung 5  
+ 
+ 10/18 
+3.2.3.  Abrechnungstotale  
+Analog zu den heutigen Papierformularen wird der gesamte Quellensteuerbetrag (brutto)  
+und die Bezugsprovision in CHF übermittelt.  
+3.3. Periodizität  
+Die Abrechnung der Sozialversicherungsbeträge und Steuern durch den Arbeitgeber bei 
+der Ausgleichskasse erfolgt pro Kalenderjahr. Sämtliche Einzelabrechnungen  einer Mel-
+dung müssen dasselbe Kalender - bzw. Steuerjahr betreffen.»  
+Die Ausgleichskassen können der kantonalen Steuerverwaltung mehrere sedex -Meldun-
+gen «BGSA -QST» pro Jahr senden.  Eine Periodizität  für den Versand der Meldungen  
+(z.B. monatlich) wird nicht  vorgegebe n, sowohl der Versand von nur einer Meldung pro 
+Jahr als auch der Versand von mehreren Meldungen pro Jahr ist möglich . Da d ie Abrech-
+nungen aus dem vereinfachten Abrechnungsverfahren  teilweise  bei den kantonalen Steu-
+erverwaltungen im Rahmen der or dentlichen Besteuerung verwendet  werden  (z.B. Be-
+rechnung Vermö genszuwachs) , wird jedoch  empfohlen  mindestens eine erste Abrech-
+nung im ersten Halbjahr für das Vorjahr einzureichen.  
+Bei mehreren Meldungen pro Jahr enthält jede  Meldung  jeweils nur neue (zusätzliche) 
+Einzelabrechnungen . Bereits übermittelte Einzelabrechnungen werden nicht nochmals 
+übermittelt . 
+3.4. Korrekturen  
+Fehler in der Deklaration des Arbeitgebers können auch erst nach der Abrechnung mit 
+der kantonalen Steuerverwaltung festgestellt werden. Die Ausgleichskasse kann bereits 
+mit der kantonalen Steuerverwaltung abgerechnete Einzelabrechnungen korrigieren. Es 
+werden grundsätzlich zwei unterschiedliche Arten von Korrekturen  unterstützt : die Storn-
+obuchung und die Differenzbuchung. Die Korrekturen werden mit der nächsten Meldung 
+übermittelt.  
+Auf eine explizite Kennzeichnung der Korrekturen wird verzichtet. Die kanto nalen Steuer-
+verwaltungen können Korrekturen indirekt erkennen: Wurde bereits eine Einzelmeldung 
+des gleichen Arbeitnehmers für das gleiche Jahr  und für  eine Beschäftigung beim glei-
+chen Arbeitgeber verbucht , handelt es  sich bei der aktuellen Einzelmeldung  um eine Kor-
+rektur.  
+Für die Steuerämter sind Stornobuchungen einfacher zu handhaben und transparenter. 
+Falls die A usgleichskasse  beide Korrekturverfahren unterstützt, ist die Übermittlung von 
+Stornobuchungen für die Steuerämter besser.  
+Die Stornierung einer  ganzen sedex -Meldung wird nicht unterstützt.  
+ 
+Beispiel  
+Die Ausgleichskasse hat initial für Frau Doris Müller einen Bruttolohn von CHF 5'500 und 
+einen Quellensteuerbetrag von CHF 275 mit der zuständigen kantonalen Steuerverwal-
+tung abgerechnet. Nach Abrech nung mit der kantonalen Steuerverwaltung ist eine Kor-
+rektur notwendig. Der korrekte Bruttolohn beträgt CHF 5'000 und somit der Quellensteu-
+erbetrag CHF 250. Die beiden Korrekturarten sind nachfolgend anhand dieses Beispiels 
+veranschaulicht:    
+ 
+ 11/18 
+• Bei der Stornobuchung werden die initial gemeldeten Beträge storniert (d.h. mit ei-
+nem negativen Vorzeichen gemeldet) und die korrekten Beträge neu übermittelt.  
+ 
+• Bei der Differenzbuchung wird lediglich die Differenz zwischen den initial gemeldeten 
+und den  korrekten Beträgen übermittelt. Diese können folglich positiv (korrigierter 
+Betrag ist höher) oder negativ (korrigierter Betrag ist kleiner) sein.  
+ 
+3.5. An falschen Empfänger gesendete Einzela brechnungen  
+Einzelabrechnungen können aufgrund der Deklaration von veralteten A dressen durch 
+den Arbeitgeber oder durch eine fehlerhafte Zuordnung auf den bezugsberechtigten Kan-
+ton (keine eindeutige Zuordnung der Postadresse auf Kanton) an die Steuerverwaltung 
+des falschen Kantons gesendet werden. Die kantonale Steuerverw altung informiert die 
+Ausgleichskasse über die an den falschen Empfänger gesendete n Einzelabrechnung en.  
+Mit der Meldung « Rückmeldung  QST BGSA» werden die betroffenen Einzelabrechnun-
+gen zurück an die Ausgleichskasse gesendet. In dieser Meldung teilt die ka ntonale Steu-
+erverwaltung der Ausgleichskasse die korrekte Wohnadresse mit, falls bekannt. Zur Er-
+stellung dieser Meldung « Rückmeldung  QST BGSA» wird den kantonalen Steuerverwal-
+tungen der Formularservice im sM -Client zur Verfügung gestellt.  
+Die Ausgleichska ssen nehmen basierend auf den Meldungen « Rückmeldung  QST 
+BGSA» die Korrekturen in ihren Fachapplikationen vor. Beim nächsten Versand der Mel-
+dung «QST BGSA» wird eine Korrektur an den falschen Empfänger und die Einzelab-
+rechnung an den korrekten Kanton überm ittelt. Die kantonalen Steuerverwaltungen müs-
+sen sicherstellen, dass  die Korrekturen nicht doppelt erfolgen . Es sind folgende zwei Sze-
+narien möglich:  
+• Die an den falschen Kanton gesendete Einzelabrechnung wird verbucht und somit 
+die Personen temporär ins Re gister aufgenommen. In diesem Fall wird auch die Kor-
+rektur der Ausgleichskasse verbucht.  
+• Sowohl die an den falschen Kanton gesendeten Einzelabrechnungen als auch die 
+Korrektur der Ausgleichskasse wird nicht verbucht.   
+3.6. Fachliche Rückmeldungen zur Meldung   
+Die kantonale Steuerverwaltung verifiziert bei der Verarbeitung, ob der Arbeitnehmer in 
+ihrem Kanton steuerpflichtig ist . Aus diesem Grund gibt es  ausser der « Rückmeldung  
+QST BGSA» für an den falschen Kanton gesendete Einzelabrechnungen keine inhaltliche 
+Rückmeldung zur Abrechnung via sedex.  
+Im Normalfall sendet die kantonale Steuerverwaltung  der Ausgleichskasse  für jede Mel-
+dung eine Rechnung und eine Verfügung per Post. Die gesetzliche Grundlage für elektro-
+nische Verfügungen fehlt  zurzeit . Sofern nichts anderes mit der Steuerverwaltung verein-
+bart ist, muss für die Überweisung der Quellensteuer die Rechnung abgewartet werden .  
+AHV Nummer Name Geburtsdatum Wohnadresse ArbeitgeberBeschäftigungs -
+periodeBruttolohn QST-Betrag
+756.6508.6893.67 Müller, Doris 01.08.1969 Dorfweg 3,
+9999 MusterdorfMusterfirma 01.01.2018 -
+31.12.2018-5’500.00 -275.00
+756.6508.6893.67 Müller, Doris 01.08.1969 Dorfweg 3,
+9999 MusterdorfMusterfirma 01.01.2018 -
+31.12.20185’000.00 250.00
+AHV Nummer Name Geburtsdatum Wohnadresse ArbeitgeberBeschäftigungs -
+periodeBruttolohn QST-Betrag
+756.6508.6893.67 Müller, Doris 01.08.1969 Dorfweg 3,
+9999 MusterdorfMusterfirma 01.01.2018 -
+31.12.2018-500.00 -25.00  
+ 
+ 12/18 
+Stellt die kantonale Steuerverwaltung einen Missbrauch fest,  teilt sie dies der Ausgleichs-
+kasse ausserhalb von sedex mit. Die Ausgleichskasse kann den betroffenen Arbeitgeber 
+vom vereinfachten Verfahren aus schliessen.  Die kantonalen Steuerverwaltungen werden 
+die bereits im vereinfachten Verfahren abgerechneten Einkünfte neu ordentlich besteuern 
+bzw. quellenbesteuern und falls die Veranlagung bereits rechtskräftig ist, wird ein Nach-
+steuerverfahren eingeleitet.  
+4. Technische Spezifikation  
+In diesem Kapitel wird die Abbildung des fachlichen Inhalts  in die XML -Strukt ur der Mel-
+dung en «QST BGSA» und « Rückmeldung  QST BGSA» beschrie ben. 
+4.1. Technische Anwendungsbestimmungen  
+Die Meldung en werden  als strukturierte Meldung en im XML -Format umgesetzt. Grund-
+lage bilden der Standard eCH-0058 Version 4.0 und das gemeinsam von der Schweizeri-
+schen Steuerkonferenz und dem Bundesamt für Sozialversic herungen (BSV) erarbeiteten 
+Detailkonzept Meldungsformat [1]. Nachfolgend sind die Hauptmerkmale des Meldungs-
+aufbaus zusammengefasst.  
+4.1.1.  Grundsätzlicher Aufbau einer Meldung  
+Die sedex -Meldungen bestehen aus zwei Teilen  (siehe Abbildung 4): Dem  sedex -Um-
+schlag und dem sedex - Nutzdatenpaket.  
+Der sedex -Umschlag (definiert gemäss  eCH-0090 Version 1.0) dient der Zustellung der 
+Meldung durch sedex und enthält  nur die zu diesem Zweck relevanten Informationen.  Der 
+Aufbau des sedex -Umschlags  ist im Kap. 4.1.2  detailliert beschrieben.  
+Das Nutzdatenpaket ist eine gezippte xml-Datei mit einem Meldungsrahmen nach eCH -
+0058 und dem eigentlichen Meldungsinhalt. Dabei enthält der Meldungsrahmen die tech-
+nischen Informationen der Meldung . Der  Meldungsinhalt enthält primär fachliche Informa-
+tionen der Meldung und repräsentiert damit d ie Meldung an sich. Der Aufbau des sedex -
+Nutzdatenpakets ist im Kap. 4.1.3  detailliert beschrieben.  
+Das Nutzdatenpaket („data_ BBBB.zip “) und der sedex Umschlag („envl_ BBBB.xml “) wer-
+den über den Dateinamen verknüpft . Dies bedeutet, dass der Teil BBBB des Dateina-
+mens exakt identisch sein muss, er kann jedoch frei vom Sender vergeben werden.  Die 
+Dateinamen  bleib en über den Transport hinweg nicht erhalten, s o dass die Dateien beim 
+Empfänger einen anderen Namen aufweisen . 
+Alle Meldungen müssen die Kodierung UTF -8 (Unicode Transformation Format 8) ver-
+wenden .   
+ 
+ 13/18 
+ 
+Abbildung 4: Aufbau der sedex -Meldung  
+4.1.2.  sedex Umschlag gemäss eCH -0090  
+Der s edex -Umschlag (envl_BBBB.xml) ist im Standard eCH -0090, Version 1 beschrie-
+ben. Die Elemente des sedex -Umschlages bilden eine Teilmenge der im Meldungsrah-
+men gemäss Standard eCH -0058 enthalten Informationen und müssen den gleichen In-
+halt enthalten. Folgende  Elemente sind im sedex -Umschlag enthalten:  
+• messageId : Eindeutige ID der Meldung  
+• messageType : Meldungstyp (« 3302 » bei der Meldung «QST BGSA»)  
+• messageClass: Bei der Meldung «QST BGSA » und «Rückmeldung QST BGSA» 
+wird immer der Wert «0» übermittelt.  
+• senderId : sedex -ID des Absenders  
+• recipientId : sedex -ID des Em pfängers  
+• eventDate: Bei der Meldung « QST BGSA » und «Rückmeldung QST BGSA» wird im-
+mer der Wert des Elements messageDate übermittelt.  
+• messageDate : Versanddatum der Meldung  
+4.1.3.  Aufbau des sedex -Nutzdatenpakets  (message_X.xml)  
+Wie bereits in Kap. 4.1.1  erwähnt, besteht das sedex -Nutzdatenpaket  (data_BBBB.zip)  
+aus einem zip -File (ZIP -Standard 2.0). In diese m zip -File können 1 bis n message_ X.xml 
+abgelegt werden ( X steht hierbei für eine  fünfstellige  ganze Zahl , wobei bei Sammelmel-
+dungen (siehe Kap.  4.1.6 ) die einzelnen Me ldungen mit 00001 beginnen und zu inkre-
+mentieren  sind).  
+Die einzelnen Meldungsdateien (message_ X.xml) innerhalb des sedex -Nutzdatenpakets 
+(zip) bestehen gemäss Abbildung 5 jeweils aus einem Meldungsrahmen (Header) und 
+einem strukturierten Meldungsinhalt (Content).  
+Im Header werden technische Informationen wie Empfänger  oder der Meldungstyp  über-
+tragen und er ist gemäss eCH -0058 , Version 4  definiert . Anhand des Headers können die 
+Meldung en beim Empfänger vorverarbeitet , triagiert und damit de m korrekten System  zu-
+gewiesen werden.  
+Der Content enthält diejenigen fachlichen Inhalte, welche strukturiert abgebildet werden 
+(siehe Kap.  4.3).  
+sedex Umschlag
+Information zur Zustellung
+Meldungsrahmen
+Information zur Vorverarbeitung
+Meldungsinhalt
+Informationen / Fachlicher Inhaltsedex -
+Umschlag
+eCH-0058
+meldungs -
+spezifischeCH-0090sedex -
+Nutzdatenpaket
+message_X.xmldata_BBBB.zip
+envl_BBBB.xml  
+ 
+ 14/18 
+ 
+Abbildung 5: Aufbau einer Meldung message_X.xml innerhalb eines sedex -Nutzdatenpakets (zip -File).  
+4.1.4.  Fachliche Quittierung  
+Die Meldung «QST BGSA»  wird fachlich  nicht quittiert (vgl. [1], Kap. 4.2).  
+4.1.5.  Weiterleitung, Korrektur und Storno  
+Der Standard eCH -0058 beschreibt die Möglichkeit, Meldungen  zu widerrufen (action -
+Code = «3»), zu korrigieren (action -Code = «4») oder weiterzuleiten (action -Code = 
+«10»). Vom Gebrauch dieser Möglichkeiten für den vorliegenden Meldungsaustausch 
+wird abgesehen. Korrekturmöglichkeiten auf Stufe einzelner Einträge  (Einzelabrechnun-
+gen) sind in Kap.  3.4 beschrieben. Andere Fehler und Ausnahmen müssen ausserhalb 
+des hier definierten Datenaustauschs abgehandelt werden (z.B.  per Telefon, Briefpost 
+etc.).  
+4.1.6.  Sammelmeldungen  
+Die Version 4 des eCH -0058  Standards erlaubt es, bei Bedarf eine Menge von Einzel-
+meldungen  (message_X.xml)  als Sammelmeldung (ZIP -Paket) zu verschicken  (siehe 
+auch Kap. 4.1.3 ). Für die Meldu ng «QST BGSA»  und «Rückmeldung QST BGSA»  wer-
+den Sammelmeldungen nicht genutzt.  Somit enthält das sedex -Nutzdatenpaket nur die 
+Datei message_ 00001 .xml. 
+4.2. Meldungsrahmen  
+Die nachstehenden Felder des Headers im Meldungsrahmens bauen auf dem Standard 
+eCH-0058v4 auf und dienen der Adressierung und technischen Verarbeitung der Mel-
+dung, enthalten selbst aber keine fachlichen Inhalte.  
+  
+Meldung X
+message_X.xml
+<message >
+</message ><header >
+…
+<extension >
+<contactInformation >
+…
+</contactInformation >
+</extension >
+</header >
+<content >
+…
+</content >Meldungsspezifischer 
+Untertyp des Meldungs -
+rahmen eCH -0058 
+Strukturierter, fachlicher 
+Meldungsinhalt  
+ 
+ 15/18 
+Element  Einschrän-
+kung  
+Werte  Vor-
+kom-
+men Bemerkungen  
+senderId    1 Def. gemäss [1] 
+originalSenderId    0 Keine Verwendung. Weiterleitung ist nicht vorgesehen  
+recipientId    1 Def. gemäss [1] 
+messageId    1 Def. gemäss [1] 
+referenceMessa-
+geId   0 Def. gemäss [1], kein Vorkommen  
+businessProces-
+sId   1 Def. gemäss [1]: Aus Sicht der für den Gesc häftsfall zu-
+ständigen Stelle eindeutige Identifikation des Geschäfts-
+falls. 
+ourBusinessRefe-
+renceId    1 Def. gemäss [1] 
+yourBusinessRe-
+ferenceId    0 Def. gemäss [1] 
+messageType  3302 1   
+subMessageType   000001  
+ 000002  1  000001 für Meldung QST BGSA  
+ 000002 für Rückmeldung QST BGSA  
+sendingApplica-
+tion   1 Def. gemäss [1] 
+partialDelivery    0 Keine Verwendung  
+subject    1 Wird beim Versand erzeugt . Für die Meldung der A us-
+gleichskasse  an die kantonale Steuerverwaltung gilt: 
+Deutsch: «QST BGSA»  
+Französi sch: «IS LTN»  
+Italienisch: «IF LLN » 
+ 
+Für die Rückmeldung der kantonalen Steuerverwaltung an 
+die Ausgleichskasse gilt: 
+Deutsch: «Rückmeldung QST BGSA»  
+Französi sch: « Retour IS LTN»  
+Italienisch: «Riscontro  IF LLN » 
+comment    0 Keine Verwendung.  
+messageDate    1 Def. gemäss [1] 
+initialMessage-
+Date    0 Keine Verwendung  
+action  1 (Neue 
+Nachricht)  1 Gilt sowohl für die Meldung «QST BGSA» als auch für die 
+«Rückmeldung QST BGSA»  
+testDeliveryFlag    1 Def. gemäss [1] 
+responseExpec-
+ted false  1 Es werden keine fachlichen Quittungen verwendet  
+business-
+CaseClosed  true 1 Def. gemäss [1] 
+extension    1 Enthält das Element «contactInformation» gemäss [1] 
+Tabelle 2: Elemente des Meldungsrahmens gemäss eCH -0058v4    
+ 
+ 16/18 
+4.3. Meldungstypen und Submeldungstypen  
+Der «DA QST BGSA» besteht aus zwei Meldungen mit den in Tabelle 3 aufgeführten 
+Ausprägungen.  
+ 
+Meldungsname  Belegung von <header> -Unterelementen  
+ message  
+Type  subMessage  
+Type  action  
+QST BGSA  3302 000001  1 
+Rückmeldung QST BGSA  3302 000002  1 
+Tabelle 3: Meldungen und dazugehörige Meldungs - und Submeldungstypen  
+Die beiden Meldungen unterscheiden sich in der Struktur ihres fachlichen Inhalts, also 
+der Schemadefinition des <content> -Elements. Die genauen Spezifikationen der zugehö-
+rigen Datentypen  sind in Kapitel 4.4 angegeben.  
+4.4. Technische Spezifikation der fachlichen Elemente  und Datentypen  
+4.4.1.  Meldung 3xxx/000001 «QST BGSA»  
+In der Meldung «QST BGSA» enthält d as <content> -Element des Meldungsrahmens 
+nach eCH -0058v4 Angaben zur Identifikation der Ausgleichskasse, die Einzelabrechnun-
+gen in den  Element en <settlementBGSA>  sowie die Abrechnun gstotale gemäss Tabelle 
+4. 
+ 
+ 
+Element  Typ Vorkom-
+men Beschreibung  
+detailsAK  detailsAKType  1 Identifikation A usgleichskasse  
+settlementBGSA  settlementBGSAType  1..n Einzelabrechnung  pro Beschäf-
+tigung  
+withholding TaxSum  xs:decimal mit 2 Nachkommas-
+tellen  1 Summe Quellensteuerbetrag 
+(brutto)  
+entitlement Provision-
+Sum  xs:decimal mit 2 Nachkommas-
+tellen  1 Summe Bezugsprovision  
+Tabelle 4: Inhalt des Elements <content > für die Meldung «QST BGSA»  
+4.4.2.  Meldung 3xxx/000002 «Rückmeldung QST BGSA»  
+In der Meldung « Rückmeldung QST BGSA» retourniert die kantonale Steuerverwaltung 
+im <content> -Element des Meldungsrahmens nach eCH -0058v4 die an den falschen 
+Kanton gesendeten Einzelabrechnungen  in den Elementen «responseBGSA» gemäss 
+Tabelle 5.  
+    
+ 
+ 17/18 
+Element  Typ Vork . Beschreibung  
+responseBGSA  responseBGSAType  1..n Einzelabrechnung  (mit korrigierter/feh-
+lender Adresse) sowie Rückweisungs-
+grund und allenfalls Kommentar  
+Tabelle 5: Inhalt des Elements <content> für die Meldung «Rückmeldung QST BGSA»  
+4.4.3.  XML-Datent ypen  
+Der Typ «detailsAKType» definiert, wie die Angaben zur Ausgleichskasse übermittelt 
+werden und ist wie in Tabelle 6 aufgeführt definiert.  
+ 
+Element  Typ Vork . Beschreibung  
+uid eCH-0097:uidStructureType  1 UID der Ausgleichskasse  
+ssl xs:string; minLength = 1  1 SSL der Ausgleichskasse in Bezug auf 
+die empfangende Steuerverwaltung  
+Tabelle 6: Definition des Typs «detailsAKType»  
+Der Typ «settlementBGSAType» definiert die Struktur einer Einzelabrechnung und ist wie 
+in Tabelle 7 aufgeführt definiert.  
+ 
+Element  Typ Vork . Beschreibung  
+taxpayer  ssk-common:natural  
+PersonsTaxType  1 Angaben zu r steuerpflichtigen  Person  
+bzw. zum Arbeitnehmer  
+employer  employerType  1 Angaben zum Arbeitgeber  
+employmentPeri-
+odStart  xs:date  1 Beschäftigungsperiode Start  
+employmentPerio-
+dEnd  xs:date  1 Beschäftigungsperiode Ende  
+taxableIncome  xs:decimal mit 2 Nachkommas-
+tellen  1 Steuerbares Einkommen (Bruttolohn)  
+withholdingTaxA-
+mount  xs:decimal mit 2 Nachkommas-
+tellen  1 Quellensteuerbetrag  
+Tabelle 7: Definition des Typs  «settlementBGSA Type»  
+Der Typ «taxpayer» enthält die Informationen zum Arbeitnehmer und ist in Tabelle 8 defi-
+niert. Es wird dabei die bestehende Definition aus dem ssk -common verwendet. In dieser 
+Definition sind alle Felder als technisch optional definiert. Die in Tabelle 8 in Spalte «Vor-
+kommen» mit einem Stern «*» markierten Einträge sind jedoch zwingend zu liefern.  
+    
+ 
+ 18/18 
+ 
+ 
+Element  Typ Vork . Beschreibung  
+officialName  eCH-0044:baseNameType  0..1* Nachname de s Arbeitnehmers  
+firstName  eCH-0044:baseNameType  0..1* Vorname des Arbeitnehmers  
+sex eCH-0044:sexType  0..1 Keine Verwendung  
+dateOfBirth  eCH-0044:datePartiallyKnown-
+Type  0..1* Geburtsdatum des Arbeitnehmers  
+vn eCH-0044:vnType  0..1* AHNV13 des Arbeitnehmers  
+oldVn  ssk-common:oldVnType  0..1 Keine Verwendung  
+address  eCH-0010:adressInformation-
+Type  0..1(*) Wohnadresse des Arbeitnehmers  (Ver-
+wendung der Elemente street, houseN-
+umber, town, swissZipCode, resp. for-
+eignZipCode, country) . Die Adresse 
+muss geliefert werden, we nn diese be-
+kannt ist.  
+taxMunicipality  eCH-0007:swissMunicipalityType  0..1 Steuerlicher Wohnsitz inkl. BFS -Num-
+mer des Arbeitnehmers  
+Keine Verwendung  
+Tabelle 8: Definition des Elementes «taxpayer» . Der Stern «*» symbolisiert eine zwingende An-
+gabe, welche im Schema als optionales Element definiert ist . Die Adresse (markiert mit «(*)» muss 
+geliefert werden, wenn diese bekannt ist.  
+Der Typ «employer» enthält die Informationen zum Arbeitgeber und ist wie folgt definie rt. 
+Element  Typ Vork.  Beschreibung  
+name  xs:token  
+(minlength = 1; maxlength = 255)  1 Name des Arbeitgebers  
+uid  eCH-0097:uidStructureType  0..1 UID des Arbeitgebers  
+vn eCH-0044:vnType  0..1 AHVN13 des Arbeitgebers  
+Tabelle 9: Definition des Elements «employer»  
+Der Typ « responseBGSAType» definiert die Struktur einer Rückmeldung zu einer Einzel-
+abrechnung und ist in wie in Tabelle 10 definiert.  
+ 
+Element  Typ Vork.  Beschreibung  
+settlementBGSA  settlementBGSAType  1 Einzelabrechnung , wobei anstelle der falschen 
+Adresse die korrekte Adresse geliefert werden 
+muss , falls diese bekannt  ist. Wenn die korrekte 
+Adresse unbekannt ist, darf keine Adresse gelie-
+fert werden (es wird nicht  die falsche Adresse 
+zurückgemeldet).  
+responseR eason  1 = Falscher Empfänger  
+99 = Anderer Grund  1 Grund der Rückmeldung  
+comment  xs:token (maxlength = 
+500) 0..1 Kommentar  
+Tabelle 10: Definition des Typs « response BGSAType»  
