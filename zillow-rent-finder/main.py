@@ -27,7 +27,7 @@ response = requests.get(zillow_url)
 html = response.text
 soup = BeautifulSoup(html, "html.parser")
 
-all_anchors = soup.find_all(name="tr", class_="app")
+all_anchors = soup.find_all(name="a", class_="property-card-link")
 href_list = [anchor.get('href') for anchor in all_anchors]
 
 all_prices = soup.find_all(
