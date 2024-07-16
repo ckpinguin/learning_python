@@ -9,8 +9,8 @@ from display import Display
 class World:
     def __init__(self, screen: pygame.Surface):
         self.screen = screen
-        self.player = pygame.sprite.GroupSingle()
-        self.aliens = pygame.sprite.Group()
+        self.player: pygame.sprite.GroupSingle[Ship] = pygame.sprite.GroupSingle()  # noqa
+        self.aliens: pygame.sprite.Group[Alien] = pygame.sprite.Group()
         self.display = Display(self.screen)
         self.game_over = False
         self.player_score = 0
@@ -29,7 +29,7 @@ class World:
 
     def _generate_player(self):
         player_x, player_y = SCREEN_WIDTH // 2, SCREEN_HEIGHT - CHARACTER_SIZE
-        center_size = CHARACTER_SIZE // 2
+        center_size = CHARACTER_SIZE // 2  # To really center the sprite :-)
         player_pos = (player_x - center_size, player_y)
         self.player.add(Ship(player_pos, CHARACTER_SIZE))
 
@@ -37,8 +37,121 @@ class World:
         self._generate_player()
         self._generate_aliens()
 
-    def player_move(self):
-        print("moving player")
+    def add_additionals(self):
+        nav = pygame.Rect(0, SCREEN_HEIGHT, SCREEN_WIDTH, NAV_THICKNESS)
+        pygame.draw.rect(self.screen, pygame.Color("gray"), nav)
+        self.display.show_life(self.player.sprite.life)
+        self.display.show_score(self.player_score)
+        self.display.show_level(self.game_level)
+
+    def player_move(self, attack=False):
+        keys = pygame.key.get_pressed()
+
+        if (keys[pygame.K_a] or keys[pygame.K_LEFT]) and not self.game_over:
+            if self.player.sprite.rect.left > 0:
+                self.player.sprite.move_left()
+
+        if (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and not self.game_over:
+            if self.player.sprite.rect.left < SCREEN_WIDTH:
+                self.player.sprite.move_right()
+
+        if (keys[pygame.K_w] or keys[pygame.K_DOWN]) and not self.game_over:
+            if self.player.sprite.rect.bottom < SCREEN_HEIGHT:
+                self.player.sprite.move_down()
+
+        # Restart button
+        if keys[pygame.K_r]:
+            self.game_over = False
+            self.player_score = 0
+            self.game_level = 1
+            for alien in self.aliens.sprites():
+                alien.kill()
+            self._generate_world()
+
+        if attack and not self.game_over:
+            self.player.sprite._shoot()
+
+    def _detect_collisions(self):
+        player_attack_collision = pygame.sprite.groupcollide(
+            self.aliens, self.player.sprite.player_bullets, True, True
+        )
+        if player_attack_collision:
+            self.player_score += 10
+
+        for alien in self.aliens.sprites():
+            alien_attack_collision = pygame.sprite.groupcollide(
+                alien.bullets, self.player, True, False
+            )
+            if alien_attack_collision:
+                self.player.sprite.life -= 1
+                break
+
+        alien_to_player_collision = pygame.sprite.groupcollide(
+            self.aliens, self.player, True, False
+        )
+        if alien_to_player_collision:
+            self.player.sprite.life -= 1
+
+    def _alien_movement(self):
+        move_sideward = False
+        move_forward = False
+
+        for alien in self.aliens.sprites():
+            if alien.to_direction == "right" \
+                    and alien.rect.right < SCREEN_WIDTH \
+                    or alien.to_direction == "left" and alien.rect.left > 0:
+                move_sideward = True
+                move_forward = False
+            else:
+                move_sideward = False
+                move_forward = True
+                alien.to_direction = \
+                    "left" if alien.to_direction == "right" else "right"
+                break
+
+        for alien in self.aliens.sprites():
+            if move_sideward and not move_forward:
+                if alien.to_direction == "right":
+                    alien.move_right()
+                if alien.to_direction == "left":
+                    alien.move_left()
+            if not move_sideward and move_forward:
+                alien.move_down()
+
+    def _alien_shoot(self):
+        for alien in self.aliens.sprites():
+            # Shoot when in line with the player
+            if (SCREEN_WIDTH - alien.rect.x) // CHARACTER_SIZE == \
+                    (SCREEN_WIDTH - self.player.sprite.rect.x) // CHARACTER_SIZE:
+                alien._shoot()
+                break
+
+    def _check_game_state(self):
+        if self.player.sprite.life <= 0:
+            self.game_over = True
+            self.display.game_over_message()
+        for alien in self.aliens.sprites():
+            if alien.rect.top >= SCREEN_HEIGHT:
+                self.game_over = True
+                self.display.game_over_message()
+                break
+
+        if len(self.aliens) == 0 and self.player.sprite.life > 0:
+            self.game_level += 1
+            self._generate_aliens()
+            for alien in self.aliens.sprites():
+                alien.move_speed += self.game_level - 1
 
     def update(self):
-        print("updating world")
+        self._detect_collisions()
+        self._alien_movement()
+        self._alien_shoot()
+        self.player.sprite.player_bullets.update()
+        self.player.sprite.player_bullets.draw(self.screen)
+        [alien.bullets.update() for alien in self.aliens.sprites()]
+        [alien.bullets.draw(self.screen) for alien in self.aliens.sprites()]
+        self.player.update()
+        self.player.draw(self.screen)
+        self.aliens.draw(self.screen)
+        self.add_additionals()
+        self._check_game_state()
