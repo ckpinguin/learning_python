@@ -4,13 +4,13 @@ from settings import SCREEN_WIDTH, SCREEN_HEIGHT, NAV_THICKNESS
 from world import World
 
 pygame.init()
-# display surface
+# the display surface:
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Space Invaders Clone Attack')
 
 
 class Main:
-    def __init__(self, screen):
+    def __init__(self, screen: pygame.Surface):
         self.screen = screen
         self.FPS = pygame.time.Clock()
 
