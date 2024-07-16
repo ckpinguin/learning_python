@@ -5,7 +5,7 @@ from world import World
 
 pygame.init()
 # the display surface:
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT + NAV_THICKNESS))
 pygame.display.set_caption('Space Invaders Clone Attack')
 
 
@@ -24,8 +24,8 @@ class Main:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        world.player_move(attack=True)
-            world.player_move()
+                        world.player_shoot()
+            world.check_keypress()
             world.update()
             pygame.display.update()
             self.FPS.tick(30)

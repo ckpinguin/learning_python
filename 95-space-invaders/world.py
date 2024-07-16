@@ -1,20 +1,28 @@
+from display import Display
 import pygame
 from ship import Ship
 from alien import Alien
-from settings import SCREEN_HEIGHT, SCREEN_WIDTH, ENEMY_SPEED, CHARACTER_SIZE, BULLET_SIZE, NAV_THICKNESS, ALIEN_ROWS
-from bullet import Bullet
-from display import Display
+from settings import (
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
+    CHARACTER_SIZE,
+    ALIEN_ROWS,
+    NAV_THICKNESS
+)
 
 
 class World:
     def __init__(self, screen: pygame.Surface):
         self.screen = screen
+
         self.player: pygame.sprite.GroupSingle[Ship] = pygame.sprite.GroupSingle()  # noqa
         self.aliens: pygame.sprite.Group[Alien] = pygame.sprite.Group()
         self.display = Display(self.screen)
+
         self.game_over = False
         self.player_score = 0
         self.game_level = 1
+
         self._generate_world()
 
     def _generate_aliens(self):
@@ -44,7 +52,10 @@ class World:
         self.display.show_score(self.player_score)
         self.display.show_level(self.game_level)
 
-    def player_move(self, attack=False):
+    def check_keypress(self):
+        # This does not work for the shooting (SPACE), because
+        # we only want to shoot once per game loop iteration, so
+        # the soot is called in main.py
         keys = pygame.key.get_pressed()
 
         if (keys[pygame.K_a] or keys[pygame.K_LEFT]) and not self.game_over:
@@ -68,8 +79,8 @@ class World:
                 alien.kill()
             self._generate_world()
 
-        if attack and not self.game_over:
-            self.player.sprite._shoot()
+    def player_shoot(self):
+        self.player.sprite._shoot()
 
     def _detect_collisions(self):
         player_attack_collision = pygame.sprite.groupcollide(
@@ -140,17 +151,20 @@ class World:
             self.game_level += 1
             self._generate_aliens()
             for alien in self.aliens.sprites():
+                # Raise speed according to current level
                 alien.move_speed += self.game_level - 1
 
     def update(self):
-        self._detect_collisions()
-        self._alien_movement()
-        self._alien_shoot()
-        self.player.sprite.player_bullets.update()
-        self.player.sprite.player_bullets.draw(self.screen)
-        [alien.bullets.update() for alien in self.aliens.sprites()]
-        [alien.bullets.draw(self.screen) for alien in self.aliens.sprites()]
-        self.player.update()
+        if not self.game_over:
+            self._detect_collisions()
+            self._alien_movement()
+            self._alien_shoot()
+            self.player.sprite.player_bullets.update()
+            self.player.sprite.player_bullets.draw(self.screen)
+            [alien.bullets.update() for alien in self.aliens.sprites()]
+            [alien.bullets.draw(self.screen)
+             for alien in self.aliens.sprites()]
+            self.player.update()
         self.player.draw(self.screen)
         self.aliens.draw(self.screen)
         self.add_additionals()

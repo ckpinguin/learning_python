@@ -12,6 +12,7 @@ class Ship(pygame.sprite.Sprite):
         self.image = pygame.image.load(img_path)
         self.image = pygame.transform.scale(self.image, (size, size))
         self.rect = self.image.get_rect(topleft=pos)
+        # mask is used for collision detection in world.py
         self.mask = pygame.mask.from_surface(self.image)
         self.ship_speed = PLAYER_SPEED
         self.life = 3
