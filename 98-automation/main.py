@@ -12,7 +12,7 @@ BROWSER_WINDOW_TITLE = 'Google Chrome'
 SWITCH_TIME = 10
 
 
-def open_browser_with_tabs(url_list: list[str] = URLS) -> None:
+def open_browser_with_tabs(url_list: list[str]) -> None:
     print("Opening browser with tabs:", url_list)
     subprocess.Popen([BROWSER_PATH, '--new-window'
                       ] + url_list)
@@ -69,6 +69,11 @@ if __name__ == '__main__':
     parser.add_argument('--urls', nargs='+',
                         help='List of URLs to open in the browser')
     args = parser.parse_args()
+
+    if not args.urls:
+        print("Error: --urls is required.")
+        sys.exit(1)
+
     open_browser_with_tabs(args.urls)
     running = True
     print("Script running, press Ctrl + Shift + Q to pause")
